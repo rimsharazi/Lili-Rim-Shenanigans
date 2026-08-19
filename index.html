@@ -1,0 +1,4777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rim & Lili Adventures</title>
+
+    <style>
+        :root {
+            --bg-color: #11100f;
+            --card-bg: #1c1917;
+            --card-bg-light: #25211f;
+            --text-color: #f5f5f4;
+            --text-muted: #a8a29e;
+            --accent-color: #f59e0b;
+            --accent-secondary: #ef4444;
+            --border-color: #3f3a36;
+            --success-color: #22c55e;
+            --danger-color: #ef4444;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family:
+                system-ui,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at top left,
+                    rgba(245, 158, 11, 0.08),
+                    transparent 35%
+                ),
+                var(--bg-color);
+
+            color: var(--text-color);
+            margin: 0;
+            min-height: 100vh;
+        }
+
+        /* =========================
+           HEADER
+        ========================= */
+
+        header {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(245, 158, 11, 0.12),
+                    rgba(239, 68, 68, 0.06)
+                ),
+                var(--card-bg);
+
+            padding: 35px 20px 30px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            letter-spacing: -1px;
+            color: var(--accent-color);
+        }
+
+        header p {
+            margin: 8px 0 0;
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        .header-tagline {
+            margin-top: 12px;
+            color: #d6d3d1;
+            font-size: 0.9rem;
+            font-style: italic;
+        }
+
+        /* =========================
+           NAVIGATION
+        ========================= */
+
+        nav {
+            background-color: var(--card-bg);
+            display: flex;
+            overflow-x: auto;
+            border-bottom: 1px solid var(--border-color);
+            scrollbar-width: thin;
+
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            flex: 0 0 auto;
+
+            background: none;
+            border: none;
+
+            color: var(--text-muted);
+
+            padding: 15px 19px;
+
+            font-weight: 600;
+            font-size: 0.9rem;
+
+            cursor: pointer;
+
+            border-bottom: 3px solid transparent;
+
+            transition:
+                color 0.2s ease,
+                background-color 0.2s ease,
+                border-color 0.2s ease;
+
+            white-space: nowrap;
+        }
+
+        .nav-btn:hover {
+            color: var(--text-color);
+            background-color: rgba(255, 255, 255, 0.035);
+        }
+
+        .nav-btn.active {
+            color: var(--accent-color);
+
+            border-bottom-color:
+                var(--accent-color);
+
+            background-color:
+                rgba(245, 158, 11, 0.07);
+        }
+
+        .nav-btn:focus-visible {
+            outline: 2px solid var(--accent-color);
+            outline-offset: -2px;
+        }
+
+        /* =========================
+           MAIN
+        ========================= */
+
+        .main-content {
+            width: 100%;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 30px 20px 60px;
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(4px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card {
+            background-color: var(--card-bg);
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 12px;
+
+            padding: 22px;
+
+            margin-bottom: 20px;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        h2 {
+            margin-top: 0;
+            margin-bottom: 20px;
+
+            border-bottom: 1px solid var(--border-color);
+
+            padding-bottom: 12px;
+
+            font-size: 1.35rem;
+        }
+
+        h3 {
+            margin-top: 0;
+        }
+
+        .section-intro {
+            color: var(--text-muted);
+            margin-top: -10px;
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+
+        /* =========================
+           FORMS
+        ========================= */
+
+        .form-group {
+            margin-bottom: 16px;
+
+            display: flex;
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+
+            padding: 12px 13px;
+
+            background-color: #121110;
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 8px;
+
+            color: var(--text-color);
+
+            font: inherit;
+
+            transition:
+                border-color 0.2s ease,
+                box-shadow 0.2s ease;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #78716c;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+
+            border-color:
+                var(--accent-color);
+
+            box-shadow:
+                0 0 0 3px
+                rgba(245, 158, 11, 0.12);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+
+            color: #18120a;
+
+            border: none;
+
+            padding: 11px 17px;
+
+            border-radius: 8px;
+
+            font-weight: 800;
+
+            cursor: pointer;
+
+            transition:
+                opacity 0.2s ease,
+                transform 0.1s ease;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn:active {
+            transform: translateY(1px);
+        }
+
+        /* =========================
+           LISTS
+        ========================= */
+
+        .item-list {
+            list-style: none;
+
+            margin: 0;
+            padding: 0;
+        }
+
+        .item-row {
+            background-color:
+                rgba(17, 16, 15, 0.65);
+
+            border: 1px solid var(--border-color);
+
+            padding: 15px;
+
+            border-radius: 9px;
+
+            margin-bottom: 10px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 15px;
+        }
+
+        .item-content {
+            min-width: 0;
+            flex: 1;
+        }
+
+        .item-content strong {
+            display: block;
+            margin-bottom: 3px;
+        }
+
+        .item-meta {
+            font-size: 0.86rem;
+
+            color: var(--text-muted);
+
+            margin-top: 5px;
+
+            white-space: pre-wrap;
+
+            line-height: 1.55;
+        }
+
+        .delete-btn {
+            flex-shrink: 0;
+
+            background: none;
+
+            border: none;
+
+            color: var(--text-muted);
+
+            cursor: pointer;
+
+            font-size: 1.05rem;
+
+            padding: 5px;
+        }
+
+        .delete-btn:hover {
+            color: var(--danger-color);
+        }
+
+        .empty-message {
+            color: var(--text-muted);
+
+            text-align: center;
+
+            padding: 30px 10px;
+        }
+
+        /* =========================
+           TWO COLUMN FORM
+        ========================= */
+
+        .two-column {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+        /* =========================
+           CULTURE COMPARISON
+        ========================= */
+
+        .culture-grid {
+            display: grid;
+
+            grid-template-columns:
+                1fr 1fr;
+
+            gap: 15px;
+        }
+
+        .culture-col {
+            background:
+                rgba(17, 16, 15, 0.45);
+
+            padding: 16px;
+
+            border-radius: 9px;
+
+            border: 1px dashed var(--border-color);
+        }
+
+        .culture-title {
+            font-weight: 800;
+
+            margin-bottom: 12px;
+
+            text-align: center;
+
+            font-size: 1rem;
+        }
+
+        .pakistan-title {
+            color: #4ade80;
+        }
+
+        .mexico-title {
+            color: #fb7185;
+        }
+
+        /* =========================
+           FOOD
+        ========================= */
+
+        .rating {
+            color: var(--accent-color);
+
+            font-weight: 700;
+        }
+
+        .food-card {
+            background:
+                rgba(17, 16, 15, 0.45);
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 9px;
+
+            padding: 16px;
+
+            margin-bottom: 12px;
+        }
+
+        .food-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: flex-start;
+
+            gap: 10px;
+
+            margin-bottom: 8px;
+        }
+
+        /* =========================
+           NOTES
+        ========================= */
+
+        .note-card {
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(245, 158, 11, 0.07),
+                    rgba(239, 68, 68, 0.04)
+                );
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 9px;
+
+            padding: 17px;
+
+            margin-bottom: 12px;
+        }
+
+        .note-author {
+            color: var(--accent-color);
+
+            font-weight: 800;
+
+            margin-bottom: 8px;
+        }
+
+        .note-body {
+            white-space: pre-wrap;
+
+            line-height: 1.65;
+        }
+
+        /* =========================
+           MEMORY VAULT
+        ========================= */
+
+        .memory-card {
+            background:
+                rgba(17, 16, 15, 0.45);
+
+            border: 1px solid var(--border-color);
+
+            border-radius: 9px;
+
+            padding: 17px;
+
+            margin-bottom: 12px;
+        }
+
+        .memory-date {
+            color: var(--text-muted);
+
+            font-size: 0.8rem;
+
+            margin-top: 5px;
+        }
+
+        /* =========================
+           TIME CAPSULE
+        ========================= */
+
+        .locked-capsule {
+            text-align: center;
+
+            padding: 22px;
+
+            color: var(--text-muted);
+
+            border: 2px dashed #57534e;
+
+            border-radius: 8px;
+        }
+
+        /* =========================
+           BUCKET LIST
+        ========================= */
+
+        .check-item {
+            display: flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            cursor: pointer;
+
+            flex: 1;
+        }
+
+        .check-item input {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .checked-text {
+            text-decoration: line-through;
+            opacity: 0.5;
+        }
+
+        /* =========================
+           COUNTDOWN
+        ========================= */
+
+        .cd-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(4, 1fr);
+
+            gap: 8px;
+
+            margin-top: 14px;
+
+            max-width: 380px;
+        }
+
+        .cd-block {
+            background:
+                var(--bg-color);
+
+            padding: 10px;
+
+            border-radius: 7px;
+
+            text-align: center;
+
+            border: 1px solid var(--border-color);
+        }
+
+        .cd-num {
+            display: block;
+
+            font-size: 1.35rem;
+
+            font-weight: bold;
+
+            color: var(--accent-color);
+        }
+
+        .cd-lbl {
+            font-size: 0.7rem;
+
+            color: var(--text-muted);
+
+            text-transform: uppercase;
+        }
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        #firebase-status {
+            position: fixed;
+
+            right: 15px;
+            bottom: 15px;
+
+            max-width: 340px;
+
+            padding: 11px 15px;
+
+            border-radius: 8px;
+
+            background: var(--card-bg);
+
+            border: 1px solid var(--border-color);
+
+            color: var(--text-muted);
+
+            font-size: 0.8rem;
+
+            display: none;
+
+            z-index: 9999;
+
+            box-shadow:
+                0 8px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        #firebase-status.show {
+            display: block;
+        }
+
+        #firebase-status.error {
+            border-color:
+                var(--danger-color);
+
+            color: #fecaca;
+        }
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 650px) {
+
+            header {
+                padding: 28px 15px 24px;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .main-content {
+                padding:
+                    22px 14px 45px;
+            }
+
+            .nav-btn {
+                padding:
+                    13px 15px;
+
+                font-size: 0.84rem;
+            }
+
+            .two-column,
+            .culture-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .cd-grid {
+                max-width: 100%;
+            }
+
+            .card {
+                padding: 17px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+
+    <h1>Rim &amp; Lili ✈️</h1>
+
+    <p>
+        A Private Live-Syncing Archive of Our Adventures
+    </p>
+
+    <div class="header-tagline">
+        Two cultures. One friendship. Zero plans.
+    </div>
+
+</header>
+
+
+<!-- =========================================================
+     NAVIGATION
+========================================================= -->
+
+<nav aria-label="Main navigation">
+
+    <button
+        type="button"
+        class="nav-btn active"
+        id="btn-story"
+        onclick="switchTab('story')">
+        📅 Our Story
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-adventures"
+        onclick="switchTab('adventures')">
+        ✈️ Adventures
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-food"
+        onclick="switchTab('food')">
+        🌮 Food Hunt
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-nights"
+        onclick="switchTab('nights')">
+        🍻 Nights Out
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-culture"
+        onclick="switchTab('culture')">
+        🇵🇰🇲🇽 Culture
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-notes"
+        onclick="switchTab('notes')">
+        💌 Notes
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-memories"
+        onclick="switchTab('memories')">
+        📸 Memory Vault
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-capsules"
+        onclick="switchTab('capsules')">
+        ⏳ Time Capsules
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-bucket"
+        onclick="switchTab('bucket')">
+        🪣 Adventure List
+    </button>
+
+    <button
+        type="button"
+        class="nav-btn"
+        id="btn-countdowns"
+        onclick="switchTab('countdowns')">
+        ⏱️ Countdowns
+    </button>
+
+</nav>
+
+
+<main class="main-content">
+
+
+<!-- =========================================================
+     OUR STORY
+========================================================= -->
+
+<section
+    id="panel-story"
+    class="tab-panel active">
+
+    <div class="card">
+
+        <h2>Log a Friendship Milestone</h2>
+
+        <p class="section-intro">
+            The dates that became part of our story.
+        </p>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'story')">
+
+            <div class="form-group">
+
+                <label for="story-title">
+                    Milestone
+                </label>
+
+                <input
+                    type="text"
+                    id="story-title"
+                    required
+                    placeholder="The day we became friends">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="story-date">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="story-date"
+                    required>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Add to Our Story
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Timeline</h2>
+
+        <ul
+            id="list-story"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     ADVENTURES
+========================================================= -->
+
+<section
+    id="panel-adventures"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Log an Adventure</h2>
+
+        <p class="section-intro">
+            Trips, random drives, local discoveries,
+            spontaneous plans and places we somehow ended up.
+        </p>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'adventures')">
+
+            <div class="form-group">
+
+                <label for="adventure-title">
+                    Place / Adventure
+                </label>
+
+                <input
+                    type="text"
+                    id="adventure-title"
+                    required
+                    placeholder="Random road trip to somewhere neither of us planned">
+
+            </div>
+
+            <div class="two-column">
+
+                <div class="form-group">
+
+                    <label for="adventure-date">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="adventure-date">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="adventure-location">
+                        Location
+                    </label>
+
+                    <input
+                        type="text"
+                        id="adventure-location"
+                        placeholder="Queens, Mexico City, Lahore...">
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="adventure-desc">
+                    What Happened?
+                </label>
+
+                <textarea
+                    id="adventure-desc"
+                    rows="4"
+                    placeholder="The story we will eventually tell everyone...">
+                </textarea>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Log Adventure
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Shared Map of Memories</h2>
+
+        <ul
+            id="list-adventures"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     FOOD HUNT
+========================================================= -->
+
+<section
+    id="panel-food"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Food Hunt 🌮🍛</h2>
+
+        <p class="section-intro">
+            New restaurants, random foods, Pakistani vs Mexican
+            debates and everything we ate along the way.
+        </p>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'food')">
+
+            <div class="form-group">
+
+                <label for="food-place">
+                    Restaurant / Food
+                </label>
+
+                <input
+                    type="text"
+                    id="food-place"
+                    required
+                    placeholder="Birria tacos, Pakistani BBQ, random food truck...">
+
+            </div>
+
+            <div class="two-column">
+
+                <div class="form-group">
+
+                    <label for="food-location">
+                        Where?
+                    </label>
+
+                    <input
+                        type="text"
+                        id="food-location"
+                        placeholder="Queens, NYC">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="food-rating">
+                        Our Rating
+                    </label>
+
+                    <select id="food-rating">
+
+                        <option value="10/10">
+                            ⭐ 10/10
+                        </option>
+
+                        <option value="9/10">
+                            ⭐ 9/10
+                        </option>
+
+                        <option value="8/10">
+                            ⭐ 8/10
+                        </option>
+
+                        <option value="7/10">
+                            ⭐ 7/10
+                        </option>
+
+                        <option value="6/10">
+                            ⭐ 6/10
+                        </option>
+
+                        <option value="5/10">
+                            ⭐ 5/10
+                        </option>
+
+                        <option value="4/10">
+                            ⭐ 4/10
+                        </option>
+
+                        <option value="3/10">
+                            ⭐ 3/10
+                        </option>
+
+                        <option value="2/10">
+                            ⭐ 2/10
+                        </option>
+
+                        <option value="1/10">
+                            ⭐ 1/10
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="two-column">
+
+                <div class="form-group">
+
+                    <label for="food-rim">
+                        Rim's Reaction
+                    </label>
+
+                    <textarea
+                        id="food-rim"
+                        rows="3"
+                        placeholder="My verdict...">
+                    </textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="food-lili">
+                        Lili's Reaction
+                    </label>
+
+                    <textarea
+                        id="food-lili"
+                        rows="3"
+                        placeholder="Lili's verdict...">
+                    </textarea>
+
+                </div>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Add Food Memory
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Food Archive</h2>
+
+        <ul
+            id="list-food"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NIGHTS OUT
+========================================================= -->
+
+<section
+    id="panel-nights"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Nights Out 🍻</h2>
+
+        <p class="section-intro">
+            Drinks, bars, late nights, questionable decisions
+            and stories that probably shouldn't be documented.
+        </p>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'nights')">
+
+            <div class="form-group">
+
+                <label for="night-title">
+                    Night / Place
+                </label>
+
+                <input
+                    type="text"
+                    id="night-title"
+                    required
+                    placeholder="That random bar we found downtown">
+
+            </div>
+
+            <div class="two-column">
+
+                <div class="form-group">
+
+                    <label for="night-date">
+                        Date
+                    </label>
+
+                    <input
+                        type="date"
+                        id="night-date">
+
+                </div>
+
+                <div class="form-group">
+
+                    <label for="night-drink">
+                        Drink of the Night
+                    </label>
+
+                    <input
+                        type="text"
+                        id="night-drink"
+                        placeholder="Margaritas, cocktails, chai...">
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="night-story">
+                    The Story
+                </label>
+
+                <textarea
+                    id="night-story"
+                    rows="4"
+                    placeholder="What actually happened?">
+                </textarea>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Save the Night
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Nights Archive</h2>
+
+        <ul
+            id="list-nights"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     CULTURE
+========================================================= -->
+
+<section
+    id="panel-culture"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Pakistan × Mexico 🇵🇰 🇲🇽</h2>
+
+        <p class="section-intro">
+            Our completely unofficial cultural research project.
+            Things we compare, debate, explain to each other,
+            and occasionally realize are weirdly similar.
+        </p>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'culture')">
+
+            <div class="form-group">
+
+                <label for="culture-topic">
+                    Topic
+                </label>
+
+                <input
+                    type="text"
+                    id="culture-topic"
+                    required
+                    placeholder="Family, weddings, food, dating, music, hospitality...">
+
+            </div>
+
+            <div class="culture-grid">
+
+                <div class="form-group">
+
+                    <label
+                        for="culture-pakistan"
+                        class="pakistan-title">
+
+                        🇵🇰 Pakistan
+
+                    </label>
+
+                    <textarea
+                        id="culture-pakistan"
+                        rows="5"
+                        required
+                        placeholder="What does Pakistani culture say about this?">
+                    </textarea>
+
+                </div>
+
+                <div class="form-group">
+
+                    <label
+                        for="culture-mexico"
+                        class="mexico-title">
+
+                        🇲🇽 Mexico
+
+                    </label>
+
+                    <textarea
+                        id="culture-mexico"
+                        rows="5"
+                        required
+                        placeholder="What does Mexican culture say about this?">
+                    </textarea>
+
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="culture-verdict">
+                    Our Verdict / What We Learned
+                </label>
+
+                <textarea
+                    id="culture-verdict"
+                    rows="4"
+                    placeholder="What surprised us? What's similar? What's completely different?">
+                </textarea>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Save Cultural Comparison
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Culture Comparisons</h2>
+
+        <ul
+            id="list-culture"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     NOTES
+========================================================= -->
+
+<section
+    id="panel-notes"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Leave a Note 💌</h2>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'notes')">
+
+            <div class="form-group">
+
+                <label for="note-author">
+                    From
+                </label>
+
+                <select id="note-author">
+
+                    <option value="Rim">
+                        Rim ✈️
+                    </option>
+
+                    <option value="Lili">
+                        Lili 🌎
+                    </option>
+
+                </select>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="note-body">
+                    Message
+                </label>
+
+                <textarea
+                    id="note-body"
+                    rows="5"
+                    required
+                    placeholder="Something you want your adventure buddy to know...">
+                </textarea>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Post Note
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Friendship Wall</h2>
+
+        <ul
+            id="list-notes"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     MEMORY VAULT
+========================================================= -->
+
+<section
+    id="panel-memories"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Save a Memory 📸</h2>
+
+        <p class="section-intro">
+            The tiny moments that aren't necessarily trips,
+            but somehow become the stories we remember forever.
+        </p>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'memories')">
+
+            <div class="form-group">
+
+                <label for="memory-title">
+                    Memory Title
+                </label>
+
+                <input
+                    type="text"
+                    id="memory-title"
+                    required
+                    placeholder="The funniest thing Lili said that night">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="memory-date">
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    id="memory-date">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="memory-body">
+                    Memory
+                </label>
+
+                <textarea
+                    id="memory-body"
+                    rows="5"
+                    required
+                    placeholder="Tell the story...">
+                </textarea>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Save Memory
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Memory Vault</h2>
+
+        <ul
+            id="list-memories"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     TIME CAPSULES
+========================================================= -->
+
+<section
+    id="panel-capsules"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Seal a Future Letter ⏳</h2>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'capsules')">
+
+            <div class="form-group">
+
+                <label for="capsule-label">
+                    Title
+                </label>
+
+                <input
+                    type="text"
+                    id="capsule-label"
+                    required
+                    placeholder="Open this after our next big trip">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="capsule-unlock-date">
+                    Unlock Date
+                </label>
+
+                <input
+                    type="date"
+                    id="capsule-unlock-date"
+                    required>
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="capsule-body">
+                    Secret Letter
+                </label>
+
+                <textarea
+                    id="capsule-body"
+                    rows="6"
+                    required
+                    placeholder="Write something for future Rim & Lili...">
+                </textarea>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                🔒 Seal Capsule
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Locked Time Capsules</h2>
+
+        <ul
+            id="list-capsules"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     BUCKET LIST
+========================================================= -->
+
+<section
+    id="panel-bucket"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Our Adventure List 🪣</h2>
+
+        <p class="section-intro">
+            Places to go, foods to try, random things to do
+            and adventures we haven't talked ourselves out of yet.
+        </p>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'bucket')">
+
+            <div class="form-group">
+
+                <label for="bucket-title">
+                    Adventure
+                </label>
+
+                <input
+                    type="text"
+                    id="bucket-title"
+                    required
+                    placeholder="Take a spontaneous trip somewhere neither of us has been">
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Add Adventure
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Things We Need to Do</h2>
+
+        <ul
+            id="list-bucket"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+<!-- =========================================================
+     COUNTDOWNS
+========================================================= -->
+
+<section
+    id="panel-countdowns"
+    class="tab-panel">
+
+    <div class="card">
+
+        <h2>Countdown to Our Next Adventure ⏱️</h2>
+
+        <form
+            onsubmit="addFirebaseItem(event, 'countdowns')">
+
+            <div class="form-group">
+
+                <label for="cd-title">
+                    Event
+                </label>
+
+                <input
+                    type="text"
+                    id="cd-title"
+                    required
+                    placeholder="Next trip / concert / adventure">
+
+            </div>
+
+            <div class="form-group">
+
+                <label for="cd-date">
+                    Target Date &amp; Time
+                </label>
+
+                <input
+                    type="datetime-local"
+                    id="cd-date"
+                    required>
+
+            </div>
+
+            <button
+                class="btn"
+                type="submit">
+
+                Activate Countdown
+
+            </button>
+
+        </form>
+
+    </div>
+
+
+    <div class="card">
+
+        <h2>Our Upcoming Adventures</h2>
+
+        <ul
+            id="list-countdowns"
+            class="item-list">
+        </ul>
+
+    </div>
+
+</section>
+
+
+</main>
+
+
+<div id="firebase-status"></div>
+
+
+<!-- =========================================================
+     TAB SYSTEM
+
+     IMPORTANT:
+     This is intentionally OUTSIDE Firebase.
+     Firebase failing cannot freeze navigation.
+========================================================= -->
+
+<script>
+
+    const VALID_TABS = [
+        "story",
+        "adventures",
+        "food",
+        "nights",
+        "culture",
+        "notes",
+        "memories",
+        "capsules",
+        "bucket",
+        "countdowns"
+    ];
+
+
+    window.switchTab = function (tabId) {
+
+        if (!VALID_TABS.includes(tabId)) {
+
+            console.warn(
+                "Unknown tab:",
+                tabId
+            );
+
+            return;
+        }
+
+
+        document
+            .querySelectorAll(".nav-btn")
+            .forEach(function (button) {
+
+                button.classList.remove("active");
+
+            });
+
+
+        document
+            .querySelectorAll(".tab-panel")
+            .forEach(function (panel) {
+
+                panel.classList.remove("active");
+
+            });
+
+
+        const button =
+            document.getElementById(
+                "btn-" + tabId
+            );
+
+
+        const panel =
+            document.getElementById(
+                "panel-" + tabId
+            );
+
+
+        if (!button || !panel) {
+
+            console.error(
+                "Could not find tab elements:",
+                tabId
+            );
+
+            return;
+        }
+
+
+        button.classList.add("active");
+
+        panel.classList.add("active");
+
+
+        window.scrollTo({
+            top: 0,
+            behavior: "smooth"
+        });
+
+    };
+
+</script>
+
+
+<!-- =========================================================
+     FIREBASE
+========================================================= -->
+
+<script type="module">
+
+    /*
+     * Existing Firebase project.
+     *
+     * This version uses NEW collection names
+     * beginning with "rimlili_" so it does not
+     * interfere with the old ShaRim collections.
+     */
+
+    const firebaseConfig = {
+
+        apiKey:
+            "AIzaSyBYpvdoW77OtkMvJJcyb-k9z051TtO3L4w",
+
+        authDomain:
+            "lili-rim-shenanigans.firebaseapp.com",
+
+        projectId:
+            "lili-rim-shenanigans",
+
+        storageBucket:
+            "lili-rim-shenanigans.firebasestorage.app",
+
+        messagingSenderId:
+            "240521606273",
+
+        appId:
+            "1:240521606273:web:4b756c885b0154c687c980"
+
+    };
+
+
+    let db = null;
+
+    let firebaseModules = null;
+
+    let firebaseReady = false;
+
+    let countdownsDataArray = [];
+
+
+    /* =========================================================
+       FIREBASE COLLECTION NAMES
+    ========================================================= */
+
+    const COLLECTIONS = {
+
+        story:
+            "rimlili_story",
+
+        adventures:
+            "rimlili_adventures",
+
+        food:
+            "rimlili_food",
+
+        nights:
+            "rimlili_nights",
+
+        culture:
+            "rimlili_culture",
+
+        notes:
+            "rimlili_notes",
+
+        memories:
+            "rimlili_memories",
+
+        capsules:
+            "rimlili_capsules",
+
+        bucket:
+            "rimlili_bucket",
+
+        countdowns:
+            "rimlili_countdowns"
+
+    };
+
+
+    /* =========================================================
+       STATUS
+    ========================================================= */
+
+    function showStatus(
+        message,
+        isError = false
+    ) {
+
+        const status =
+            document.getElementById(
+                "firebase-status"
+            );
+
+
+        if (!status) {
+            return;
+        }
+
+
+        status.textContent =
+            message;
+
+
+        status.classList.add(
+            "show"
+        );
+
+
+        if (isError) {
+
+            status.classList.add(
+                "error"
+            );
+
+        } else {
+
+            status.classList.remove(
+                "error"
+            );
+
+        }
+
+
+        setTimeout(function () {
+
+            status.classList.remove(
+                "show"
+            );
+
+        }, 5000);
+
+    }
+
+
+    /* =========================================================
+       FIREBASE INITIALIZATION
+    ========================================================= */
+
+    async function initializeFirebase() {
+
+        if (firebaseReady) {
+            return true;
+        }
+
+
+        try {
+
+            const firebaseAppModule =
+                await import(
+                    "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js"
+                );
+
+
+            const firebaseFirestoreModule =
+                await import(
+                    "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js"
+                );
+
+
+            const app =
+                firebaseAppModule.initializeApp(
+                    firebaseConfig
+                );
+
+
+            db =
+                firebaseFirestoreModule.getFirestore(
+                    app
+                );
+
+
+            firebaseModules =
+                firebaseFirestoreModule;
+
+
+            firebaseReady = true;
+
+
+            console.log(
+                "Rim & Lili Firebase initialized."
+            );
+
+
+            startRealtimeListeners();
+
+
+            return true;
+
+        } catch (error) {
+
+            console.error(
+                "Firebase initialization failed:",
+                error
+            );
+
+
+            firebaseReady = false;
+
+
+            showStatus(
+                "Firebase could not be loaded. Navigation still works.",
+                true
+            );
+
+
+            return false;
+        }
+
+    }
+
+
+    /* =========================================================
+       ENSURE FIREBASE
+    ========================================================= */
+
+    async function ensureFirebase() {
+
+        if (
+            firebaseReady &&
+            db &&
+            firebaseModules
+        ) {
+
+            return true;
+
+        }
+
+
+        return await initializeFirebase();
+
+    }
+
+
+    /* =========================================================
+       ESCAPE HTML
+    ========================================================= */
+
+    function escapeHtml(value) {
+
+        if (
+            value === null ||
+            value === undefined
+        ) {
+
+            return "";
+
+        }
+
+
+        return String(value)
+
+            .replace(
+                /&/g,
+                "&amp;"
+            )
+
+            .replace(
+                /</g,
+                "&lt;"
+            )
+
+            .replace(
+                />/g,
+                "&gt;"
+            )
+
+            .replace(
+                /"/g,
+                "&quot;"
+            )
+
+            .replace(
+                /'/g,
+                "&#039;"
+            );
+
+    }
+
+
+    /* =========================================================
+       ADD ITEM
+    ========================================================= */
+
+    window.addFirebaseItem =
+        async function (
+            event,
+            type
+        ) {
+
+            event.preventDefault();
+
+
+            const connected =
+                await ensureFirebase();
+
+
+            if (!connected) {
+
+                showStatus(
+                    "Firebase is unavailable. Check your connection.",
+                    true
+                );
+
+                return;
+            }
+
+
+            try {
+
+                const {
+                    collection,
+                    addDoc
+                } = firebaseModules;
+
+
+                let payload = {
+
+                    timestamp:
+                        Date.now()
+
+                };
+
+
+                /* =========================
+                   STORY
+                ========================= */
+
+                if (type === "story") {
+
+                    const title =
+                        document
+                            .getElementById(
+                                "story-title"
+                            )
+                            .value
+                            .trim();
+
+
+                    const date =
+                        document
+                            .getElementById(
+                                "story-date"
+                            )
+                            .value;
+
+
+                    payload.title =
+                        title;
+
+                    payload.meta =
+                        date;
+
+
+                    document
+                        .getElementById(
+                            "story-title"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "story-date"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   ADVENTURES
+                ========================= */
+
+                else if (
+                    type === "adventures"
+                ) {
+
+                    const title =
+                        document
+                            .getElementById(
+                                "adventure-title"
+                            )
+                            .value
+                            .trim();
+
+
+                    const date =
+                        document
+                            .getElementById(
+                                "adventure-date"
+                            )
+                            .value;
+
+
+                    const location =
+                        document
+                            .getElementById(
+                                "adventure-location"
+                            )
+                            .value
+                            .trim();
+
+
+                    const description =
+                        document
+                            .getElementById(
+                                "adventure-desc"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.title =
+                        title;
+
+                    payload.date =
+                        date;
+
+                    payload.location =
+                        location;
+
+                    payload.description =
+                        description;
+
+
+                    document
+                        .getElementById(
+                            "adventure-title"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "adventure-date"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "adventure-location"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "adventure-desc"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   FOOD
+                ========================= */
+
+                else if (
+                    type === "food"
+                ) {
+
+                    const place =
+                        document
+                            .getElementById(
+                                "food-place"
+                            )
+                            .value
+                            .trim();
+
+
+                    const location =
+                        document
+                            .getElementById(
+                                "food-location"
+                            )
+                            .value
+                            .trim();
+
+
+                    const rating =
+                        document
+                            .getElementById(
+                                "food-rating"
+                            )
+                            .value;
+
+
+                    const rim =
+                        document
+                            .getElementById(
+                                "food-rim"
+                            )
+                            .value
+                            .trim();
+
+
+                    const lili =
+                        document
+                            .getElementById(
+                                "food-lili"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.title =
+                        place;
+
+                    payload.location =
+                        location;
+
+                    payload.rating =
+                        rating;
+
+                    payload.rim =
+                        rim;
+
+                    payload.lili =
+                        lili;
+
+
+                    document
+                        .getElementById(
+                            "food-place"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "food-location"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "food-rim"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "food-lili"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   NIGHTS
+                ========================= */
+
+                else if (
+                    type === "nights"
+                ) {
+
+                    const title =
+                        document
+                            .getElementById(
+                                "night-title"
+                            )
+                            .value
+                            .trim();
+
+
+                    const date =
+                        document
+                            .getElementById(
+                                "night-date"
+                            )
+                            .value;
+
+
+                    const drink =
+                        document
+                            .getElementById(
+                                "night-drink"
+                            )
+                            .value
+                            .trim();
+
+
+                    const story =
+                        document
+                            .getElementById(
+                                "night-story"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.title =
+                        title;
+
+                    payload.date =
+                        date;
+
+                    payload.drink =
+                        drink;
+
+                    payload.story =
+                        story;
+
+
+                    document
+                        .getElementById(
+                            "night-title"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "night-date"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "night-drink"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "night-story"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   CULTURE
+                ========================= */
+
+                else if (
+                    type === "culture"
+                ) {
+
+                    const topic =
+                        document
+                            .getElementById(
+                                "culture-topic"
+                            )
+                            .value
+                            .trim();
+
+
+                    const pakistan =
+                        document
+                            .getElementById(
+                                "culture-pakistan"
+                            )
+                            .value
+                            .trim();
+
+
+                    const mexico =
+                        document
+                            .getElementById(
+                                "culture-mexico"
+                            )
+                            .value
+                            .trim();
+
+
+                    const verdict =
+                        document
+                            .getElementById(
+                                "culture-verdict"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.title =
+                        topic;
+
+                    payload.pakistan =
+                        pakistan;
+
+                    payload.mexico =
+                        mexico;
+
+                    payload.verdict =
+                        verdict;
+
+
+                    document
+                        .getElementById(
+                            "culture-topic"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "culture-pakistan"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "culture-mexico"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "culture-verdict"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   NOTES
+                ========================= */
+
+                else if (
+                    type === "notes"
+                ) {
+
+                    const author =
+                        document
+                            .getElementById(
+                                "note-author"
+                            )
+                            .value;
+
+
+                    const body =
+                        document
+                            .getElementById(
+                                "note-body"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.title =
+                        body;
+
+                    payload.author =
+                        author;
+
+
+                    document
+                        .getElementById(
+                            "note-body"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   MEMORIES
+                ========================= */
+
+                else if (
+                    type === "memories"
+                ) {
+
+                    const title =
+                        document
+                            .getElementById(
+                                "memory-title"
+                            )
+                            .value
+                            .trim();
+
+
+                    const date =
+                        document
+                            .getElementById(
+                                "memory-date"
+                            )
+                            .value;
+
+
+                    const body =
+                        document
+                            .getElementById(
+                                "memory-body"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.title =
+                        title;
+
+                    payload.date =
+                        date;
+
+                    payload.body =
+                        body;
+
+
+                    document
+                        .getElementById(
+                            "memory-title"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "memory-date"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "memory-body"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   CAPSULES
+                ========================= */
+
+                else if (
+                    type === "capsules"
+                ) {
+
+                    const label =
+                        document
+                            .getElementById(
+                                "capsule-label"
+                            )
+                            .value
+                            .trim();
+
+
+                    const unlockDate =
+                        document
+                            .getElementById(
+                                "capsule-unlock-date"
+                            )
+                            .value;
+
+
+                    const body =
+                        document
+                            .getElementById(
+                                "capsule-body"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.label =
+                        label;
+
+                    payload.unlockDate =
+                        unlockDate;
+
+                    payload.body =
+                        body;
+
+
+                    document
+                        .getElementById(
+                            "capsule-label"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "capsule-unlock-date"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "capsule-body"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   BUCKET
+                ========================= */
+
+                else if (
+                    type === "bucket"
+                ) {
+
+                    const title =
+                        document
+                            .getElementById(
+                                "bucket-title"
+                            )
+                            .value
+                            .trim();
+
+
+                    payload.title =
+                        title;
+
+                    payload.checked =
+                        false;
+
+
+                    document
+                        .getElementById(
+                            "bucket-title"
+                        )
+                        .value = "";
+
+                }
+
+
+                /* =========================
+                   COUNTDOWNS
+                ========================= */
+
+                else if (
+                    type === "countdowns"
+                ) {
+
+                    const title =
+                        document
+                            .getElementById(
+                                "cd-title"
+                            )
+                            .value
+                            .trim();
+
+
+                    const targetDate =
+                        document
+                            .getElementById(
+                                "cd-date"
+                            )
+                            .value;
+
+
+                    if (
+                        !title ||
+                        !targetDate
+                    ) {
+
+                        return;
+
+                    }
+
+
+                    payload.title =
+                        title;
+
+                    payload.targetDate =
+                        targetDate;
+
+
+                    document
+                        .getElementById(
+                            "cd-title"
+                        )
+                        .value = "";
+
+
+                    document
+                        .getElementById(
+                            "cd-date"
+                        )
+                        .value = "";
+
+                }
+
+
+                else {
+
+                    console.error(
+                        "Unknown collection type:",
+                        type
+                    );
+
+                    return;
+
+                }
+
+
+                await addDoc(
+
+                    collection(
+                        db,
+                        COLLECTIONS[type]
+                    ),
+
+                    payload
+
+                );
+
+
+                console.log(
+                    "Added:",
+                    type
+                );
+
+
+                showStatus(
+                    "Saved successfully."
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    `Failed to add ${type}:`,
+                    error
+                );
+
+
+                showStatus(
+                    `Could not save ${type}. Check Firebase permissions.`,
+                    true
+                );
+
+            }
+
+        };
+
+
+    /* =========================================================
+       DELETE
+    ========================================================= */
+
+    window.deleteFirebaseItem =
+        async function (
+            type,
+            id
+        ) {
+
+            if (
+                !firebaseReady ||
+                !db ||
+                !firebaseModules
+            ) {
+
+                showStatus(
+                    "Firebase is unavailable.",
+                    true
+                );
+
+                return;
+
+            }
+
+
+            const confirmed =
+                confirm(
+                    "Permanently delete this memory?"
+                );
+
+
+            if (!confirmed) {
+                return;
+            }
+
+
+            try {
+
+                const {
+                    deleteDoc,
+                    doc
+                } = firebaseModules;
+
+
+                await deleteDoc(
+
+                    doc(
+                        db,
+                        COLLECTIONS[type],
+                        id
+                    )
+
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Delete failed:",
+                    error
+                );
+
+
+                showStatus(
+                    "Could not delete this item.",
+                    true
+                );
+
+            }
+
+        };
+
+
+    /* =========================================================
+       BUCKET CHECKBOX
+    ========================================================= */
+
+    window.toggleBucketCheckbox =
+        async function (
+            id,
+            currentStatus
+        ) {
+
+            if (
+                !firebaseReady ||
+                !db ||
+                !firebaseModules
+            ) {
+
+                return;
+
+            }
+
+
+            try {
+
+                const {
+                    updateDoc,
+                    doc
+                } = firebaseModules;
+
+
+                await updateDoc(
+
+                    doc(
+                        db,
+                        COLLECTIONS.bucket,
+                        id
+                    ),
+
+                    {
+                        checked:
+                            !currentStatus
+                    }
+
+                );
+
+            }
+
+            catch (error) {
+
+                console.error(
+                    "Bucket update failed:",
+                    error
+                );
+
+
+                showStatus(
+                    "Could not update adventure.",
+                    true
+                );
+
+            }
+
+        };
+
+
+    /* =========================================================
+       REALTIME LISTENERS
+    ========================================================= */
+
+    function startRealtimeListeners() {
+
+        if (
+            !firebaseReady ||
+            !db ||
+            !firebaseModules
+        ) {
+
+            return;
+
+        }
+
+
+        const {
+            collection,
+            onSnapshot,
+            query,
+            orderBy
+        } = firebaseModules;
+
+
+        Object.keys(
+            COLLECTIONS
+        ).forEach(function (type) {
+
+            const collectionRef =
+                collection(
+                    db,
+                    COLLECTIONS[type]
+                );
+
+
+            const orderedQuery =
+                query(
+                    collectionRef,
+                    orderBy(
+                        "timestamp",
+                        "desc"
+                    )
+                );
+
+
+            onSnapshot(
+
+                orderedQuery,
+
+                function (snapshot) {
+
+                    renderCollection(
+                        type,
+                        snapshot.docs
+                    );
+
+                },
+
+                function (error) {
+
+                    console.error(
+                        `Realtime listener failed for ${type}:`,
+                        error
+                    );
+
+
+                    tryFallbackListener(
+                        type
+                    );
+
+                }
+
+            );
+
+        });
+
+    }
+
+
+    /* =========================================================
+       FALLBACK LISTENER
+    ========================================================= */
+
+    function tryFallbackListener(
+        type
+    ) {
+
+        if (
+            !firebaseReady ||
+            !db ||
+            !firebaseModules
+        ) {
+
+            return;
+
+        }
+
+
+        const {
+            collection,
+            onSnapshot
+        } = firebaseModules;
+
+
+        onSnapshot(
+
+            collection(
+                db,
+                COLLECTIONS[type]
+            ),
+
+            function (snapshot) {
+
+                renderCollection(
+                    type,
+                    snapshot.docs
+                );
+
+            },
+
+            function (error) {
+
+                console.error(
+                    `Fallback listener failed for ${type}:`,
+                    error
+                );
+
+            }
+
+        );
+
+    }
+
+
+    /* =========================================================
+       RENDER COLLECTION
+    ========================================================= */
+
+    function renderCollection(
+        type,
+        docs
+    ) {
+
+        const todayStr =
+            new Date()
+                .toISOString()
+                .split("T")[0];
+
+
+        /* =========================
+           COUNTDOWNS
+        ========================= */
+
+        if (
+            type === "countdowns"
+        ) {
+
+            countdownsDataArray =
+                docs.map(
+                    function (document) {
+
+                        return {
+
+                            id:
+                                document.id,
+
+                            ...document.data()
+
+                        };
+
+                    }
+                );
+
+
+            runClockTicker();
+
+            return;
+
+        }
+
+
+        /* =========================
+           STORY
+        ========================= */
+
+        if (
+            type === "story"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-story"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        Our story starts here...
+                    </li>
+                `;
+
+                return;
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    listEl.innerHTML += `
+
+                        <li class="item-row">
+
+                            <div class="item-content">
+
+                                <strong>
+                                    📍
+                                    ${escapeHtml(
+                                        item.title
+                                    )}
+                                </strong>
+
+                                <div class="item-meta">
+
+                                    ${escapeHtml(
+                                        item.meta || ""
+                                    )}
+
+                                </div>
+
+                            </div>
+
+                            <button
+                                type="button"
+                                class="delete-btn"
+                                onclick="
+                                    deleteFirebaseItem(
+                                        'story',
+                                        '${document.id}'
+                                    )
+                                "
+                                title="Delete">
+
+                                🗑️
+
+                            </button>
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           ADVENTURES
+        ========================= */
+
+        if (
+            type === "adventures"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-adventures"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        No adventures yet. Go somewhere.
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    listEl.innerHTML += `
+
+                        <li class="card">
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:space-between;
+                                    align-items:flex-start;
+                                    gap:10px;
+                                ">
+
+                                <div>
+
+                                    <strong>
+                                        ✈️
+                                        ${escapeHtml(
+                                            item.title
+                                        )}
+                                    </strong>
+
+                                    <div
+                                        class="item-meta">
+
+                                        ${escapeHtml(
+                                            item.location || ""
+                                        )}
+
+                                        ${
+                                            item.date
+                                                ? " • " +
+                                                  escapeHtml(
+                                                      item.date
+                                                  )
+                                                : ""
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="delete-btn"
+                                    onclick="
+                                        deleteFirebaseItem(
+                                            'adventures',
+                                            '${document.id}'
+                                        )
+                                    "
+                                    title="Delete">
+
+                                    🗑️
+
+                                </button>
+
+                            </div>
+
+                            <p
+                                style="
+                                    white-space:pre-wrap;
+                                    line-height:1.6;
+                                    margin-bottom:0;
+                                ">
+
+                                ${escapeHtml(
+                                    item.description || ""
+                                )}
+
+                            </p>
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           FOOD
+        ========================= */
+
+        if (
+            type === "food"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-food"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        The food research begins here... 🌮
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    listEl.innerHTML += `
+
+                        <li class="food-card">
+
+                            <div class="food-header">
+
+                                <div>
+
+                                    <strong>
+                                        🌮
+                                        ${escapeHtml(
+                                            item.title
+                                        )}
+                                    </strong>
+
+                                    <div class="item-meta">
+
+                                        ${escapeHtml(
+                                            item.location || ""
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                                <div class="rating">
+
+                                    ${escapeHtml(
+                                        item.rating || ""
+                                    )}
+
+                                </div>
+
+                            </div>
+
+                            <div
+                                class="two-column"
+                                style="margin-top:15px;">
+
+                                <div
+                                    class="culture-col">
+
+                                    <strong>
+                                        Rim
+                                    </strong>
+
+                                    <div
+                                        class="item-meta"
+                                        style="white-space:pre-wrap;">
+
+                                        ${escapeHtml(
+                                            item.rim || ""
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    class="culture-col">
+
+                                    <strong>
+                                        Lili
+                                    </strong>
+
+                                    <div
+                                        class="item-meta"
+                                        style="white-space:pre-wrap;">
+
+                                        ${escapeHtml(
+                                            item.lili || ""
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div
+                                style="
+                                    text-align:right;
+                                    margin-top:8px;
+                                ">
+
+                                <button
+                                    type="button"
+                                    class="delete-btn"
+                                    onclick="
+                                        deleteFirebaseItem(
+                                            'food',
+                                            '${document.id}'
+                                        )
+                                    "
+                                    title="Delete">
+
+                                    🗑️
+
+                                </button>
+
+                            </div>
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           NIGHTS
+        ========================= */
+
+        if (
+            type === "nights"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-nights"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        No questionable nights documented yet. 🍻
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    listEl.innerHTML += `
+
+                        <li class="card">
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:space-between;
+                                    gap:10px;
+                                ">
+
+                                <div>
+
+                                    <strong>
+                                        🍻
+                                        ${escapeHtml(
+                                            item.title
+                                        )}
+                                    </strong>
+
+                                    <div
+                                        class="item-meta">
+
+                                        ${escapeHtml(
+                                            item.date || ""
+                                        )}
+
+                                        ${
+                                            item.drink
+                                                ? " • " +
+                                                  escapeHtml(
+                                                      item.drink
+                                                  )
+                                                : ""
+                                        }
+
+                                    </div>
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="delete-btn"
+                                    onclick="
+                                        deleteFirebaseItem(
+                                            'nights',
+                                            '${document.id}'
+                                        )
+                                    "
+                                    title="Delete">
+
+                                    🗑️
+
+                                </button>
+
+                            </div>
+
+                            <p
+                                style="
+                                    white-space:pre-wrap;
+                                    line-height:1.6;
+                                    margin-bottom:0;
+                                ">
+
+                                ${escapeHtml(
+                                    item.story || ""
+                                )}
+
+                            </p>
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           CULTURE
+        ========================= */
+
+        if (
+            type === "culture"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-culture"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        No cultural debates yet. 🇵🇰 🇲🇽
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    listEl.innerHTML += `
+
+                        <li class="card">
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:space-between;
+                                    align-items:center;
+                                    margin-bottom:15px;
+                                ">
+
+                                <strong>
+                                    ${escapeHtml(
+                                        item.title
+                                    )}
+                                </strong>
+
+                                <button
+                                    type="button"
+                                    class="delete-btn"
+                                    onclick="
+                                        deleteFirebaseItem(
+                                            'culture',
+                                            '${document.id}'
+                                        )
+                                    "
+                                    title="Delete">
+
+                                    🗑️
+
+                                </button>
+
+                            </div>
+
+                            <div class="culture-grid">
+
+                                <div
+                                    class="culture-col">
+
+                                    <div
+                                        class="
+                                            culture-title
+                                            pakistan-title
+                                        ">
+
+                                        🇵🇰 Pakistan
+
+                                    </div>
+
+                                    <div
+                                        style="
+                                            white-space:pre-wrap;
+                                            line-height:1.6;
+                                        ">
+
+                                        ${escapeHtml(
+                                            item.pakistan || ""
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                                <div
+                                    class="culture-col">
+
+                                    <div
+                                        class="
+                                            culture-title
+                                            mexico-title
+                                        ">
+
+                                        🇲🇽 Mexico
+
+                                    </div>
+
+                                    <div
+                                        style="
+                                            white-space:pre-wrap;
+                                            line-height:1.6;
+                                        ">
+
+                                        ${escapeHtml(
+                                            item.mexico || ""
+                                        )}
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            ${
+                                item.verdict
+                                    ? `
+                                        <div
+                                            style="
+                                                margin-top:15px;
+                                                padding:14px;
+                                                border-radius:8px;
+                                                background:rgba(245,158,11,0.06);
+                                                border:1px solid var(--border-color);
+                                            ">
+
+                                            <strong>
+                                                Our Take
+                                            </strong>
+
+                                            <div
+                                                style="
+                                                    margin-top:7px;
+                                                    white-space:pre-wrap;
+                                                    line-height:1.6;
+                                                ">
+
+                                                ${escapeHtml(
+                                                    item.verdict
+                                                )}
+
+                                            </div>
+
+                                        </div>
+                                    `
+                                    : ""
+                            }
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           NOTES
+        ========================= */
+
+        if (
+            type === "notes"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-notes"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        Leave the first note. 💌
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    listEl.innerHTML += `
+
+                        <li class="note-card">
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:space-between;
+                                ">
+
+                                <div class="note-author">
+
+                                    ${escapeHtml(
+                                        item.author || ""
+                                    )}
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="delete-btn"
+                                    onclick="
+                                        deleteFirebaseItem(
+                                            'notes',
+                                            '${document.id}'
+                                        )
+                                    "
+                                    title="Delete">
+
+                                    🗑️
+
+                                </button>
+
+                            </div>
+
+                            <div class="note-body">
+
+                                ${escapeHtml(
+                                    item.title || ""
+                                )}
+
+                            </div>
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           MEMORIES
+        ========================= */
+
+        if (
+            type === "memories"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-memories"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        The memory vault is empty. 📸
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    listEl.innerHTML += `
+
+                        <li class="memory-card">
+
+                            <div
+                                style="
+                                    display:flex;
+                                    justify-content:space-between;
+                                    gap:10px;
+                                ">
+
+                                <div>
+
+                                    <strong>
+                                        📸
+                                        ${escapeHtml(
+                                            item.title
+                                        )}
+                                    </strong>
+
+                                    ${
+                                        item.date
+                                            ? `
+                                                <div
+                                                    class="memory-date">
+
+                                                    ${escapeHtml(
+                                                        item.date
+                                                    )}
+
+                                                </div>
+                                            `
+                                            : ""
+                                    }
+
+                                </div>
+
+                                <button
+                                    type="button"
+                                    class="delete-btn"
+                                    onclick="
+                                        deleteFirebaseItem(
+                                            'memories',
+                                            '${document.id}'
+                                        )
+                                    "
+                                    title="Delete">
+
+                                    🗑️
+
+                                </button>
+
+                            </div>
+
+                            <div
+                                style="
+                                    margin-top:13px;
+                                    white-space:pre-wrap;
+                                    line-height:1.65;
+                                ">
+
+                                ${escapeHtml(
+                                    item.body || ""
+                                )}
+
+                            </div>
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           BUCKET
+        ========================= */
+
+        if (
+            type === "bucket"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-bucket"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        No adventures planned yet. Add something ridiculous.
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    const checked =
+                        Boolean(
+                            item.checked
+                        );
+
+
+                    listEl.innerHTML += `
+
+                        <li class="item-row">
+
+                            <label
+                                class="check-item">
+
+                                <input
+                                    type="checkbox"
+                                    ${
+                                        checked
+                                            ? "checked"
+                                            : ""
+                                    }
+                                    onchange="
+                                        toggleBucketCheckbox(
+                                            '${document.id}',
+                                            ${checked}
+                                        )
+                                    ">
+
+                                <span
+                                    class="${
+                                        checked
+                                            ? "checked-text"
+                                            : ""
+                                    }">
+
+                                    ${escapeHtml(
+                                        item.title
+                                    )}
+
+                                </span>
+
+                            </label>
+
+                            <button
+                                type="button"
+                                class="delete-btn"
+                                onclick="
+                                    deleteFirebaseItem(
+                                        'bucket',
+                                        '${document.id}'
+                                    )
+                                "
+                                title="Delete">
+
+                                🗑️
+
+                            </button>
+
+                        </li>
+
+                    `;
+
+                }
+            );
+
+
+            return;
+
+        }
+
+
+        /* =========================
+           TIME CAPSULES
+        ========================= */
+
+        if (
+            type === "capsules"
+        ) {
+
+            const listEl =
+                document.getElementById(
+                    "list-capsules"
+                );
+
+
+            if (!listEl) {
+                return;
+            }
+
+
+            listEl.innerHTML = "";
+
+
+            if (
+                docs.length === 0
+            ) {
+
+                listEl.innerHTML = `
+                    <li class="empty-message">
+                        No time capsules sealed yet.
+                    </li>
+                `;
+
+                return;
+
+            }
+
+
+            docs.forEach(
+                function (document) {
+
+                    const item =
+                        document.data();
+
+
+                    const isLocked =
+                        todayStr <
+                        item.unlockDate;
+
+
+                    if (isLocked) {
+
+                        listEl.innerHTML += `
+
+                            <li class="card">
+
+                                <div
+                                    class="locked-capsule">
+
+                                    <div
+                                        style="
+                                            font-size:2rem;
+                                            margin-bottom:8px;
+                                        ">
+
+                                        🔒
+
+                                    </div>
+
+                                    <strong>
+                                        ${escapeHtml(
+                                            item.label
+                                        )}
+                                    </strong>
+
+                                    <br>
+
+                                    <small>
+
+                                        Locked until:
+                                        ${escapeHtml(
+                                            item.unlockDate
+                                        )}
+
+                                    </small>
+
+                                </div>
+
+                                <div
+                                    style="
+                                        text-align:right;
+                                        margin-top:5px;
+                                    ">
+
+                                    <button
+                                        type="button"
+                                        class="delete-btn"
+                                        onclick="
+                                            deleteFirebaseItem(
+                                                'capsules',
+                                                '${document.id}'
+                                            )
+                                        "
+                                        title="Delete">
+
+                                        🗑️
+
+                                    </button>
+
+                                </div>
+
+                            </li>
+
+                        `;
+
+                    }
+
+                    else {
+
+                        listEl.innerHTML += `
+
+                            <li
+                                class="card"
+                                style="
+                                    border-color:
+                                    var(--success-color);
+                                ">
+
+                                <div
+                                    style="
+                                        display:flex;
+                                        justify-content:space-between;
+                                        align-items:center;
+                                    ">
+
+                                    <strong>
+
+                                        🔓 Opened:
+                                        ${escapeHtml(
+                                            item.label
+                                        )}
+
+                                    </strong>
+
+                                    <button
+                                        type="button"
+                                        class="delete-btn"
+                                        onclick="
+                                            deleteFirebaseItem(
+                                                'capsules',
+                                                '${document.id}'
+                                            )
+                                        "
+                                        title="Delete">
+
+                                        🗑️
+
+                                    </button>
+
+                                </div>
+
+                                <p
+                                    style="
+                                        white-space:pre-wrap;
+                                        font-style:italic;
+                                        background:rgba(0,0,0,0.2);
+                                        padding:14px;
+                                        border-radius:7px;
+                                        line-height:1.65;
+                                    ">
+
+                                    ${escapeHtml(
+                                        item.body
+                                    )}
+
+                                </p>
+
+                            </li>
+
+                        `;
+
+                    }
+
+                }
+            );
+
+
+            return;
+
+        }
+
+    }
+
+
+    /* =========================================================
+       COUNTDOWN TICKER
+    ========================================================= */
+
+    function runClockTicker() {
+
+        const listEl =
+            document.getElementById(
+                "list-countdowns"
+            );
+
+
+        if (!listEl) {
+            return;
+        }
+
+
+        listEl.innerHTML = "";
+
+
+        if (
+            countdownsDataArray.length === 0
+        ) {
+
+            listEl.innerHTML = `
+                <li class="empty-message">
+                    No upcoming adventures yet.
+                </li>
+            `;
+
+            return;
+
+        }
+
+
+        const now =
+            Date.now();
+
+
+        countdownsDataArray.forEach(
+            function (item) {
+
+                const target =
+                    new Date(
+                        item.targetDate
+                    ).getTime();
+
+
+                const diff =
+                    target - now;
+
+
+                let layoutString = "";
+
+
+                if (
+                    Number.isNaN(target) ||
+                    diff <= 0
+                ) {
+
+                    layoutString = `
+
+                        <div
+                            style="
+                                color:#22c55e;
+                                font-weight:bold;
+                                margin-top:10px;
+                            ">
+
+                            🎉 The Adventure Has Arrived!
+
+                        </div>
+
+                    `;
+
+                }
+
+                else {
+
+                    const days =
+                        Math.floor(
+                            diff /
+                            (1000 * 60 * 60 * 24)
+                        );
+
+
+                    const hours =
+                        Math.floor(
+                            (
+                                diff %
+                                (
+                                    1000 *
+                                    60 *
+                                    60 *
+                                    24
+                                )
+                            ) /
+                            (
+                                1000 *
+                                60 *
+                                60
+                            )
+                        );
+
+
+                    const minutes =
+                        Math.floor(
+                            (
+                                diff %
+                                (
+                                    1000 *
+                                    60 *
+                                    60
+                                )
+                            ) /
+                            (
+                                1000 *
+                                60
+                            )
+                        );
+
+
+                    const seconds =
+                        Math.floor(
+                            (
+                                diff %
+                                (
+                                    1000 *
+                                    60
+                                )
+                            ) /
+                            1000
+                        );
+
+
+                    layoutString = `
+
+                        <div class="cd-grid">
+
+                            <div class="cd-block">
+
+                                <span class="cd-num">
+                                    ${days}
+                                </span>
+
+                                <span class="cd-lbl">
+                                    Days
+                                </span>
+
+                            </div>
+
+                            <div class="cd-block">
+
+                                <span class="cd-num">
+                                    ${String(
+                                        hours
+                                    ).padStart(
+                                        2,
+                                        "0"
+                                    )}
+                                </span>
+
+                                <span class="cd-lbl">
+                                    Hrs
+                                </span>
+
+                            </div>
+
+                            <div class="cd-block">
+
+                                <span class="cd-num">
+                                    ${String(
+                                        minutes
+                                    ).padStart(
+                                        2,
+                                        "0"
+                                    )}
+                                </span>
+
+                                <span class="cd-lbl">
+                                    Min
+                                </span>
+
+                            </div>
+
+                            <div class="cd-block">
+
+                                <span class="cd-num">
+                                    ${String(
+                                        seconds
+                                    ).padStart(
+                                        2,
+                                        "0"
+                                    )}
+                                </span>
+
+                                <span class="cd-lbl">
+                                    Sec
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    `;
+
+                }
+
+
+                let targetDisplay =
+                    "";
+
+
+                if (
+                    !Number.isNaN(target)
+                ) {
+
+                    targetDisplay =
+                        new Date(
+                            target
+                        ).toLocaleString();
+
+                }
+
+
+                listEl.innerHTML += `
+
+                    <li
+                        class="card"
+                        style="
+                            background:
+                            rgba(17,16,15,0.3);
+                            margin-bottom:12px;
+                            padding:17px;
+                        ">
+
+                        <div
+                            style="
+                                display:flex;
+                                justify-content:space-between;
+                                align-items:center;
+                                gap:10px;
+                            ">
+
+                            <strong>
+
+                                ⏱️
+                                ${escapeHtml(
+                                    item.title
+                                )}
+
+                            </strong>
+
+                            <button
+                                type="button"
+                                class="delete-btn"
+                                onclick="
+                                    deleteFirebaseItem(
+                                        'countdowns',
+                                        '${item.id}'
+                                    )
+                                "
+                                title="Delete">
+
+                                🗑️
+
+                            </button>
+
+                        </div>
+
+                        <div
+                            class="item-meta"
+                            style="margin-bottom:5px;">
+
+                            Target:
+                            ${escapeHtml(
+                                targetDisplay
+                            )}
+
+                        </div>
+
+                        ${layoutString}
+
+                    </li>
+
+                `;
+
+            }
+        );
+
+    }
+
+
+    /* =========================================================
+       START FIREBASE
+       
+       Firebase loading happens independently from the
+       navigation system.
+    ========================================================= */
+
+    initializeFirebase();
+
+
+    /* =========================================================
+       UPDATE COUNTDOWNS EVERY SECOND
+    ========================================================= */
+
+    setInterval(
+        runClockTicker,
+        1000
+    );
+
+</script>
+
+</body>
+</html>
